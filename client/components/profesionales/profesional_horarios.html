@@ -1,0 +1,569 @@
+<template name="profesionalHorarios">
+
+<div class="panel panel-success">
+	  	<div class="panel-heading"><strong><h3>Horarios del profesional:  {{profesional.nombreApellido}}</h3></strong></div>
+	  	<div class="panel-body">		    
+		    			
+			<div class="col-lg-12">				
+
+				<table class="table table-hover">
+					<thead>
+				      <tr>
+			          	<th class="#80cbc4 teal-text">DIA</th>
+			          	<th class="#80cbc4 teal-text">HORARIO MAÑANA</th>
+			          	<th class="#80cbc4 teal-text">HORARIO TARDE</th>
+	                    <th class="#80cbc4 teal-text">ACCION</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				    	
+					    <tr>
+					        <td>Lunes</td>	
+					        {{#if profesional.lunes.atiendeManana}}			        
+					        	<td>{{formatDate5 profesional.lunes.mananaInicio}} - {{formatDate4 profesional.lunes.mananaFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+
+					        {{# if profesional.lunes.atiendeTarde}}
+					        	<td>{{formatDate5 profesional.lunes.tardeInicio}} - {{formatDate4 profesional.lunes.tardeFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+					        <td>
+					        	<span class="right">						        	
+					        		<a href="#" class="modalCargarLunes btn btn-success btn-xs">Cambiar</a>											        		
+								</span>
+					        </td>
+					        
+					    </tr>
+				      	<tr>
+					        <td>Martes</td>	
+					        {{#if profesional.martes.atiendeManana}}			        
+					        	<td>{{formatDate5 profesional.martes.mananaInicio}} - {{formatDate4 profesional.martes.mananaFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+
+					        {{# if profesional.martes.atiendeTarde}}
+					        	<td>{{formatDate5 profesional.martes.tardeInicio}} - {{formatDate4 profesional.martes.tardeFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+					        <td>
+					        	<span class="right">						        	
+					        		<a href="#" class="modalCargarMartes btn btn-success btn-xs">Cambiar</a>											        		
+								</span>
+					        </td>
+					        
+					    </tr>
+					    <tr>
+					        <td>Miércoles</td>	
+					        {{#if profesional.miercoles.atiendeManana}}			        
+					        	<td>{{formatDate5 profesional.miercoles.mananaInicio}} - {{formatDate4 profesional.miercoles.mananaFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+
+					        {{# if profesional.miercoles.atiendeTarde}}
+					        	<td>{{formatDate5 profesional.miercoles.tardeInicio}} - {{formatDate4 profesional.miercoles.tardeFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+					        <td>
+					        	<span class="right">						        	
+					        		<a href="#" class="modalCargarMiercoles btn btn-success btn-xs">Cambiar</a>											        		
+								</span>
+					        </td>
+					        
+					    </tr>
+				      	<tr>
+					        <td>Jueves</td>	
+					        {{#if profesional.jueves.atiendeManana}}			        
+					        	<td>{{formatDate5 profesional.jueves.mananaInicio}} - {{formatDate4 profesional.jueves.mananaFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+
+					        {{# if profesional.jueves.atiendeTarde}}
+					        	<td>{{formatDate5 profesional.jueves.tardeInicio}} - {{formatDate4 profesional.jueves.tardeFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+					        <td>
+					        	<span class="right">						        	
+					        		<a href="#" class="modalCargarJueves btn btn-success btn-xs">Cambiar</a>											        		
+								</span>
+					        </td>
+					        
+					    </tr>
+				      	<tr>
+					        <td>Viernes</td>	
+					        {{#if profesional.viernes.atiendeManana}}			        
+					        	<td>{{formatDate5 profesional.viernes.mananaInicio}} - {{formatDate4 profesional.viernes.mananaFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+
+					        {{# if profesional.viernes.atiendeTarde}}
+					        	<td>{{formatDate5 profesional.viernes.tardeInicio}} - {{formatDate4 profesional.viernes.tardeFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+					        <td>
+					        	<span class="right">						        	
+					        		<a href="#" class="modalCargarViernes btn btn-success btn-xs">Cambiar</a>											        		
+								</span>
+					        </td>
+					        
+					    </tr>
+				      	<tr>
+					        <td>Sabado</td>	
+					        {{#if profesional.sabado.atiendeManana}}			        
+					        	<td>{{formatDate5 profesional.sabado.mananaInicio}} - {{formatDate4 profesional.sabado.mananaFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+
+					        {{# if profesional.sabado.atiendeTarde}}
+					        	<td>{{formatDate5 profesional.sabado.tardeInicio}} - {{formatDate4 profesional.sabado.tardeFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+					        <td>
+					        	<span class="right">						        	
+					        		<a href="#" class="modalCargarSabado btn btn-success btn-xs">Cambiar</a>											        		
+								</span>
+					        </td>
+					        
+					    </tr>
+				      	<tr>
+					        <td>Domingo</td>	
+					        {{#if profesional.domingo.atiendeManana}}			        
+					        	<td>{{formatDate5 profesional.domingo.mananaInicio}} - {{formatDate4 profesional.domingo.mananaFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+
+					        {{# if profesional.domingo.atiendeTarde}}
+					        	<td>{{formatDate5 profesional.domingo.tardeInicio}} - {{formatDate4 profesional.domingo.tardeFin}}</td>
+					        {{else}}
+					        	<td>AUSENTE</td>
+					        {{/if}}
+					        <td>
+					        	<span class="right">						        	
+					        		<a href="#" class="modalCargarDomingo btn btn-success btn-xs">Cambiar</a>											        		
+								</span>
+					        </td>
+					        
+					    </tr>
+				     
+
+				      	
+				    </tbody>	
+				</table>						
+
+				
+			</div>			
+		</div>		
+</div>
+
+<!-- ******************MODAL EDITAR HORARIO LUNES********************************-->
+<div class="modal" id="modalCargarLunes" role="dialog">
+  	<div class="modal-dialog modal-md">	
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form class="form" id="formCargarLunes">			
+        <div class="modal-body">			
+			  	<div class="panel-body">			  		
+			  		{{#if consultorio.lunes.atiendeManana}}
+				  		<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaMananaLunes"><strong>¿Trabaja de mañana?</strong> </label></div>
+						    <div class="panel-body">
+						      	<input type="text" id="rangoMananaLunes"/>					        
+							</div>
+							</div>								      		
+						</div>
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Mañana</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE MAÑANA</p>
+							</div>
+							</div>								      		
+						</div>
+					{{/if}}
+					{{#if consultorio.lunes.atiendeTarde}}
+					<div class="row">
+						<div class="panel panel-default">
+					    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaTardeLunes"><strong>¿Trabaja de tarde?</strong> </label></div>
+					    <div class="panel-body">
+					    	<input type="text" id="rangoTardeLunes"/>					      	
+						</div>
+						</div>								      		
+					</div>	
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Tarde</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE TARDE</p>
+							</div>
+							</div>								      		
+						</div>				  			
+					{{/if}}
+			  	</div>
+        </div> 
+        <div class="modal-footer">
+			<button type="submit" id="submit" class="btn btn-success">Guardar</button>						        	
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		</div>   
+		</form>	           
+      </div>      
+    </div>
+</div>
+
+<!-- ******************MODAL EDITAR HORARIO MARTES********************************-->
+<div class="modal" id="modalCargarMartes" role="dialog">
+  	<div class="modal-dialog modal-md">	
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form class="form" id="formCargarMartes">			
+        <div class="modal-body">			
+			  	<div class="panel-body">			  		
+			  		{{#if consultorio.martes.atiendeManana}}
+				  		<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaMananaMartes"><strong>¿Trabaja de mañana?</strong> </label></div>
+						    <div class="panel-body">
+						      	<input type="text" id="rangoMananaMartes"/>					        
+							</div>
+							</div>								      		
+						</div>
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Mañana</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE MAÑANA</p>
+							</div>
+							</div>								      		
+						</div>
+					{{/if}}
+					{{#if consultorio.martes.atiendeTarde}}
+					<div class="row">
+						<div class="panel panel-default">
+					    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaTardeMartes"><strong>¿Trabaja de tarde?</strong> </label></div>
+					    <div class="panel-body">
+					    	<input type="text" id="rangoTardeMartes"/>					      	
+						</div>
+						</div>								      		
+					</div>	
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Tarde</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE TARDE</p>
+							</div>
+							</div>								      		
+						</div>				  			
+					{{/if}}
+			  	</div>
+        </div> 
+        <div class="modal-footer">
+			<button type="submit" id="submit" class="btn btn-success">Guardar</button>						        	
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		</div>   
+		</form>	           
+      </div>      
+    </div>
+</div>
+
+<!-- ******************MODAL EDITAR HORARIO MIERCOLES********************************-->
+<div class="modal" id="modalCargarMiercoles" role="dialog">
+  	<div class="modal-dialog modal-md">	
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form class="form" id="formCargarMiercoles">			
+        <div class="modal-body">			
+			  	<div class="panel-body">			  		
+			  		{{#if consultorio.miercoles.atiendeManana}}
+				  		<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaMananaMiercoles"><strong>¿Trabaja de mañana?</strong> </label></div>
+						    <div class="panel-body">
+						      	<input type="text" id="rangoMananaMiercoles"/>					        
+							</div>
+							</div>								      		
+						</div>
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Mañana</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE MAÑANA</p>
+							</div>
+							</div>								      		
+						</div>
+					{{/if}}
+					{{#if consultorio.miercoles.atiendeTarde}}
+					<div class="row">
+						<div class="panel panel-default">
+					    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaTardeMiercoles"><strong>¿Trabaja de tarde?</strong> </label></div>
+					    <div class="panel-body">
+					    	<input type="text" id="rangoTardeMiercoles"/>					      	
+						</div>
+						</div>								      		
+					</div>	
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Tarde</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE TARDE</p>
+							</div>
+							</div>								      		
+						</div>				  			
+					{{/if}}
+			  	</div>
+        </div> 
+        <div class="modal-footer">
+			<button type="submit" id="submit" class="btn btn-success">Guardar</button>						        	
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		</div>   
+		</form>	           
+      </div>      
+    </div>
+</div>
+
+<!-- ******************MODAL EDITAR HORARIO JUEVES********************************-->
+<div class="modal" id="modalCargarJueves" role="dialog">
+  	<div class="modal-dialog modal-md">	
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form class="form" id="formCargarJueves">			
+        <div class="modal-body">			
+			  	<div class="panel-body">			  		
+			  		{{#if consultorio.jueves.atiendeManana}}
+				  		<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaMananaJueves"><strong>¿Trabaja de mañana?</strong> </label></div>
+						    <div class="panel-body">
+						      	<input type="text" id="rangoMananaJueves"/>					        
+							</div>
+							</div>								      		
+						</div>
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Mañana</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE MAÑANA</p>
+							</div>
+							</div>								      		
+						</div>
+					{{/if}}
+					{{#if consultorio.jueves.atiendeTarde}}
+					<div class="row">
+						<div class="panel panel-default">
+					    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaTardeJueves"><strong>¿Trabaja de tarde?</strong> </label></div>
+					    <div class="panel-body">
+					    	<input type="text" id="rangoTardeJueves"/>					      	
+						</div>
+						</div>								      		
+					</div>	
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Tarde</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE TARDE</p>
+							</div>
+							</div>								      		
+						</div>				  			
+					{{/if}}
+			  	</div>
+        </div> 
+        <div class="modal-footer">
+			<button type="submit" id="submit" class="btn btn-success">Guardar</button>						        	
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		</div>   
+		</form>	           
+      </div>      
+    </div>
+</div>
+
+<!-- ******************MODAL EDITAR HORARIO VIERNES********************************-->
+<div class="modal" id="modalCargarViernes" role="dialog">
+  	<div class="modal-dialog modal-md">	
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form class="form" id="formCargarViernes">			
+        <div class="modal-body">			
+			  	<div class="panel-body">			  		
+			  		{{#if consultorio.viernes.atiendeManana}}
+				  		<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaMananaViernes"><strong>¿Trabaja de mañana?</strong> </label></div>
+						    <div class="panel-body">
+						      	<input type="text" id="rangoMananaViernes"/>					        
+							</div>
+							</div>								      		
+						</div>
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Mañana</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE MAÑANA</p>
+							</div>
+							</div>								      		
+						</div>
+					{{/if}}
+					{{#if consultorio.viernes.atiendeTarde}}
+					<div class="row">
+						<div class="panel panel-default">
+					    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaTardeViernes"><strong>¿Trabaja de tarde?</strong> </label></div>
+					    <div class="panel-body">
+					    	<input type="text" id="rangoTardeViernes"/>					      	
+						</div>
+						</div>								      		
+					</div>	
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Tarde</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE TARDE</p>
+							</div>
+							</div>								      		
+						</div>				  			
+					{{/if}}
+			  	</div>
+        </div> 
+        <div class="modal-footer">
+			<button type="submit" id="submit" class="btn btn-success">Guardar</button>						        	
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		</div>   
+		</form>	           
+      </div>      
+    </div>
+</div>
+
+<!-- ******************MODAL EDITAR HORARIO SABADO********************************-->
+<div class="modal" id="modalCargarSabado" role="dialog">
+  	<div class="modal-dialog modal-md">	
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form class="form" id="formCargarSabado">			
+        <div class="modal-body">			
+			  	<div class="panel-body">			  		
+			  		{{#if consultorio.sabado.atiendeManana}}
+				  		<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaMananaSabado"><strong>¿Trabaja de mañana?</strong> </label></div>
+						    <div class="panel-body">
+						      	<input type="text" id="rangoMananaSabado"/>					        
+							</div>
+							</div>								      		
+						</div>
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Mañana</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE MAÑANA</p>
+							</div>
+							</div>								      		
+						</div>
+					{{/if}}
+					{{#if consultorio.sabado.atiendeTarde}}
+					<div class="row">
+						<div class="panel panel-default">
+					    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaTardeSabado"><strong>¿Trabaja de tarde?</strong> </label></div>
+					    <div class="panel-body">
+					    	<input type="text" id="rangoTardeSabado"/>					      	
+						</div>
+						</div>								      		
+					</div>	
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Tarde</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE TARDE</p>
+							</div>
+							</div>								      		
+						</div>				  			
+					{{/if}}
+			  	</div>
+        </div> 
+        <div class="modal-footer">
+			<button type="submit" id="submit" class="btn btn-success">Guardar</button>						        	
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		</div>   
+		</form>	           
+      </div>      
+    </div>
+</div>
+
+<div class="modal" id="modalCargarDomingo" role="dialog">
+  	<div class="modal-dialog modal-md">	
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form class="form" id="formCargarDomingo">			
+        <div class="modal-body">			
+			  	<div class="panel-body">			  		
+			  		{{#if consultorio.domingo.atiendeManana}}
+				  		<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaMananaDomingo"><strong>¿Trabaja de mañana?</strong> </label></div>
+						    <div class="panel-body">
+						      	<input type="text" id="rangoMananaDomingo"/>					        
+							</div>
+							</div>								      		
+						</div>
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Mañana</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE MAÑANA</p>
+							</div>
+							</div>								      		
+						</div>
+					{{/if}}
+					{{#if consultorio.domingo.atiendeTarde}}
+					<div class="row">
+						<div class="panel panel-default">
+					    <div class="panel-heading"><label class="checkbox-inline"><input type="checkbox" id="trabajaTardeDomingo"><strong>¿Trabaja de tarde?</strong> </label></div>
+					    <div class="panel-body">
+					    	<input type="text" id="rangoTardeDomingo"/>					      	
+						</div>
+						</div>								      		
+					</div>	
+					{{else}}
+						<div class="row">
+							<div class="panel panel-default">
+						    <div class="panel-heading"><strong>Tarde</strong></div>
+						    <div class="panel-body">
+						      	<p>EL CONSULTORIO NO ATIENDE DE TARDE</p>
+							</div>
+							</div>								      		
+						</div>				  			
+					{{/if}}
+			  	</div>
+        </div> 
+        <div class="modal-footer">
+			<button type="submit" id="submit" class="btn btn-success">Guardar</button>						        	
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		</div>   
+		</form>	           
+      </div>      
+    </div>
+</div>
+
+</template>

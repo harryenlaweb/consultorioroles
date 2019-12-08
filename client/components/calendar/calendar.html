@@ -1,0 +1,2543 @@
+<template name="calendar">
+
+	
+
+<!--
+<style>
+	.event a {
+		background: #f1948a  !important;
+		background-color: #f1948a  !important;
+		color: white !important;
+	}
+</style>-->
+
+<!--**************************************INICIO VENTANAS MODALES************************************-->
+
+
+<!--***************** MODAL PARA RESERVAR TURNOS*********************-->
+<div class="modal right fade" id="modalIngresoTurno" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+	<div class="modal-dialog modal-lg">										    
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Reserva de turnos</h4>
+        </div>                      	
+      		<div class="modal-body">        	
+		        <form class="form" id="formTurno">
+				    <div class="form-group">						        						            
+					      	<div class="row">
+						      	<div class="col-xs-6">
+						      		<div class="panel panel-default">
+									    <div class="panel-heading"><strong>Paciente</strong></div>
+									    <div class="panel-body">											    
+									    <input class="form-control typeahead" name="team" type="text"										       
+									       	autocomplete="off" spellcheck="off"
+									       	data-source="pacientes1"
+									       	data-select="selecPaciente"/>
+								       		<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoPaciente">+</button>
+								       	</div>												
+									</div>								      		
+					        	</div>
+					        	<div class="col-xs-6">
+							      	<div class="panel panel-default">
+								      	<div class="panel-heading"><strong>Profesional</strong></div>
+										<div class="panel-body">{{profesional1.nombreApellido}}</div>
+						        	</div>
+					        	</div>											        	
+					        </div>
+
+					        <div class="row">
+					        	<div class="col-xs-6">
+						      		<div class="panel panel-default">
+									    <div class="panel-heading"><strong>Tratamiento</strong></div>
+									    <div class="panel-body">{{tratamiento1.nombre}}</div>
+									</div>								      		
+					        	</div>
+					        	<div class="col-xs-3">
+							      	<div class="panel panel-default">
+								      	<div class="panel-heading"><strong>Día</strong></div>
+										<div class="panel-body">{{formatDate2 dia}}</div>
+						        	</div>
+					        	</div>
+					        	<div class="col-xs-3">
+							      	<div class="panel panel-default">
+								      	<div class="panel-heading"><strong>Duración</strong></div>
+										<div class="panel-body">{{duracion1}} min</div>
+						        	</div>
+					        	</div>										        	
+					        </div>
+
+					        <div class="row">
+						      	<div class="col-xs-6">
+							      	<div class="form-group">
+									  <label for="usr">Notas</label>
+									  <textarea class="form-control" rows="5" id="motivo"></textarea>
+									</div>
+					        	</div>
+					        	<div class="col-xs-6">
+					        		<div class="row">
+								      	<strong><p>Hora Inicio</p></strong>      	
+							        	<div class="form-group col-xs-6">	
+										    <select class="form-control" id="selHoraInicio">										        
+										        {{rangoSelect}}										        
+										    </select>
+										</div>
+										<div class="form-group col-xs-6">	
+										    <select class="form-control" id="selMinutosInicio">
+										        <option>00</option>        
+										        <option>05</option>        
+										        <option>10</option>        
+										        <option>15</option>        
+										        <option>20</option>        
+										        <option>25</option>        
+										        <option>30</option>
+										        <option>35</option>       
+										        <option>40</option>        
+										        <option>45</option>        
+										        <option>50</option>        
+										        <option>55</option>        
+										    </select>
+										</div>
+									</div>									
+					        	</div>				        	
+					        </div>				        
+				        <div class="modal-footer">
+				        	<button type="submit" id="submit" class="btn btn-success">Guardar</button>
+				        	
+				          	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				        </div>
+					</div>						
+			    </form>			        	
+	      	</div>       	
+      </div>
+	</div>
+</div><!-- modal -->
+
+
+<!-- ******************MODAL CREAR PACIENTE********************************-->
+<div class="modal" id="modalIngresoPaciente" role="dialog">
+  	<div class="modal-dialog modal-md">			    
+      	<!-- Modal content-->
+      	<div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">Nuevo paciente</h4>
+	        </div>			        
+		    <form class="form" id="formPaciente">						    
+			    <div class="modal-body">			    	
+				  	<input type="text" class="form-control" id="nombreApellido" placeholder="Nombre y apellido" name="nombreApellido" aria-describedby="basic-addon1"> <br>							
+				  	<input type="text" class="form-control" id="dni" placeholder="DNI" name="dni" aria-describedby="basic-addon2"> <br>
+									
+				  	<input type="text" class="form-control" id="telefono" placeholder="Teléfono" name="telefono" aria-describedby="basic-addon3"> <br>  	
+				
+					<input class="form-control typeahead" name="team" type="text"										       
+					       	autocomplete="off" spellcheck="off"
+					       	data-source="obras1"
+					       	data-select="selecObra"
+					       	placeholder="Obra social">		 
+					<br>	<br>	
+					<input type="text" class="form-control" id="carnet" placeholder="Número de carnet" name="numeroCarnet" aria-describedby="basic-addon3">
+				</div>
+				<div class="modal-footer">
+		        	<button type="submit" id="submit" class="btn btn-success">Guardar</button>        	
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>		        
+			    </div>							
+		    </form>			        
+      	</div>
+    </div>
+</div>
+
+<!-- ********************** MODAL INFO DEL PACIENTE EN EL TURNO *********************-->
+<div class="modal" id="modalInfoPaciente" role="dialog">									  	
+  	<div class="modal-dialog modal-md">										          
+      <div class="modal-content">
+      	
+        
+        <div class="modal-body">
+			<div class="panel panel-info">
+			  	<div class="panel-heading">
+			  		<button type="button" class="close" data-dismiss="modal">&times;</button>          
+			  		<h3>Información del paciente</h3>
+			  	</div>					  	
+			  	<div class="panel-body">
+			  		<table class="table table-hover">
+				  		<thead>
+					      <tr>
+				          	<th class="col-xs-4"></th>
+				          	<th class="col-xs-8"></th>	                    
+					      </tr>
+					    </thead>				
+					    <tbody>
+					      <tr>
+					      	<td><strong><p>Nombre y Apellido</p></strong></td>
+					      	<td>{{ModalInfoPaciente.nombreApellido}}</td>
+					      </tr>		    	
+					      <tr>
+					      	<td><strong><p>DNI</p></strong></td>
+					      	<td>{{ModalInfoPaciente.dni}}</td>
+					      </tr>	
+					      <tr>
+					      	<td><strong><p>Teléfono</p></strong></td>
+					      	<td>{{ModalInfoPaciente.telefono}}</td>
+					      </tr>	      						     			      
+					    </tbody>	
+					</table>
+			  	</div>
+			</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- ********************** MODAL ELIMINAR TURNO *********************-->
+<div class="modal" id="modalEliminarTurno" role="dialog">									  	
+  	<div class="modal-dialog modal-md">										          
+      <div class="modal-content">
+      	
+        
+        <div class="modal-body">
+			<div class="panel panel-danger">
+			  	<div class="panel-heading">
+			  		<button type="button" class="close" data-dismiss="modal">&times;</button>          
+			  		<h3>¿Desea eliminar el turno?</h3>
+			  	</div>					  	
+			  	<div class="panel-body">
+			  		<table class="table table-hover">
+				  		<thead>
+					      <tr>
+				          	<th class="col-xs-4"></th>
+				          	<th class="col-xs-8"></th>	                    
+					      </tr>
+					    </thead>				
+					    <tbody>
+					      <tr>
+					      	<td><strong><p>Paciente</p></strong></td>
+					      	<td>{{turnoEliminar.paciente.nombreApellido}}</td>
+					      </tr>		    	
+					      <tr>
+					      	<td><strong><p>Turno</p></strong></td>
+					      	<td>{{formatDate1 turnoEliminar.inicio}} - {{formatDate1 turnoEliminar.fin}}</td>
+					      </tr>		      						     			      
+					    </tbody>	
+					</table>
+			  	</div>
+			</div>
+        </div>
+        <div class="modal-footer">
+        	<button class="_remove btn btn-danger">Eliminar</button>
+          	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>          	
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- ********************** MODAL BUSCAR TURNOS *********************-->
+<div class="modal" id="modalBuscarTurnos" role="dialog">									  	
+  	<div class="modal-dialog modal-lg">										    
+
+      <!-- Modal content-->
+      <div class="modal-content">
+      	
+        
+        <div class="modal-body">
+			<div class="panel panel-info">
+			  	<div class="panel-heading">
+			  		<button type="button" class="borrarInfoBuscar close" data-dismiss="modal">&times;</button>          
+			  		<h3>Buscar turnos</h3>
+			  	</div>					  	
+			  	<div class="panel-body">
+			  		<label>Paciente</label>
+			  		<input class="form-control typeahead" name="team2" type="text"										       
+									       	autocomplete="off" spellcheck="off"
+									       	data-source="pacientesBuscar"
+									       	data-select="selecPacienteBuscar"/>
+					<div class="form-group">						
+						<table class="table table-hover">
+							<thead>
+						      <tr>				          	
+					          	<th class="#80cbc4 teal-text">Dia</th>
+					          	<th class="#80cbc4 teal-text">Horario</th>					          	
+					          	<th class="#80cbc4 teal-text">Profesional</th>
+					          	<th class="#80cbc4 teal-text">Estado</th>
+						      </tr>
+						    </thead>				  						
+						    
+						    {{#each turnosBuscar}}
+						    	{{#if compare estado "FALTO"}}
+							    	<tbody>					    						    	
+								      <tr class="danger">					        							        
+								        <td><strong>{{formatDate2 inicio}} </strong></td>
+								      	<td><strong>{{formatDate1 inicio}} - {{formatDate1 fin}}</strong></td>					    
+								    	<td>{{profesional.nombreApellido}}</td>
+								    	<td>{{estado}}</td>
+								      </tr>
+								    </tbody>							    
+							    {{else}}	
+							    	<tbody>					    						    	
+								      <tr>					        							        
+								        <td><strong style="color: #21618c">{{formatDate2 inicio}} </strong></td>
+								      	<td><strong>{{formatDate1 inicio}} - {{formatDate1 fin}}</strong></td>					    
+								    	<td>{{profesional.nombreApellido}}</td>
+								    	<td>{{estado}}</td>
+								      </tr>
+								    </tbody>
+							    {{/if}}
+							    
+							{{/each}}					      			      
+						    
+						</table>					  
+					</div> 					
+			  	</div>
+			</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="borrarInfoBuscar btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+<!-- ********************** MODAL INFO DE LOS TRATAMIENTOS *********************-->
+<div class="modal" id="modalInfoTratamientos" role="dialog">									  	
+  	<div class="modal-dialog modal-md">										    
+
+      <!-- Modal content-->
+      <div class="modal-content">
+      	
+        
+        <div class="modal-body">
+			<div class="panel panel-info">
+			  	<div class="panel-heading">
+			  		<button type="button" class="close" data-dismiss="modal">&times;</button>          
+			  		<h3>Información de los tratamientos</h3>
+			  	</div>					  	
+			  	<div class="panel-body">
+			  		<table class="table table-hover">				  						
+					    <tbody>
+					    {{#each ModalInfoTratamientos}}
+					    	<tr>						      	
+						      	<td><strong>{{nombre}}</strong> / {{duracion}} min / $ {{importe}}</td>
+						    </tr>						    
+						{{/each}}					      			      
+					    </tbody>	
+					</table>
+					<div class="form-group">
+					  <label for="usr">Notas</label>
+					  <textarea disabled class="form-control" rows="5" id="motivo" value={{ModalInfoTurno.motivo}}></textarea>
+					</div>				
+			  	</div>
+			</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+	{{>modalesErrores}}			
+
+
+<!--*************************************************FIN VENTANAS MODALES*******************************************-->
+
+<div class="form-group row">
+	<div class="col-md-4">
+		
+      	<select class="form-control m-b" id="profesionales1">
+      			<option>Seleccione profesional...</option>
+        	{{#each profesionales1}}
+		        <option value="{{_id}}">{{nombreApellido}}</option>
+    		 {{/each}}
+      	</select>	      	
+  	</div>
+  	<!--{{#if profesional1.combos}}
+  		{{#if ActualizarVista}}  				
+  			<div class="col-xs-12 col-md-6">				
+				{{#Multiselect name='multiple' menuItems=myMenuItems selectedList=mySelectedList configOptions=myConfigOptions}}				    
+				    <option value={{value}} {{selectedAttr}}>{{caption}}</option>
+				{{/Multiselect}}					
+  			</div>
+  		{{else}}
+  			<div class="col-xs-12 col-md-6">	  		
+		  		{{#Multiselect name='multiple' menuItems=myMenuItems selectedList=mySelectedList configOptions=myConfigOptions}}				    
+				    <option value={{value}} {{selectedAttr}}>{{caption}}</option>
+				{{/Multiselect}}
+		  	</div>
+  		{{/if}}
+  	{{else}}-->
+  		<div class="col-md-6">	  		
+  			<select class="form-control m-b" id="tratamiento1">
+    			<option>Seleccione tratamiento...</option>	        	
+      			{{#each tratamientos1}}
+		        	<option value="{{_id}}">{{nombre}} / {{duracion}} min</option>
+    		 	{{/each}}
+  			</select>
+
+  		</div>
+  	<!--{{/if}}-->
+  	<div class="col-md-1">   		
+   		<h4><strong>{{duracion1}} min</strong></h4><!--<label for="input_text">{{duracion1}} min</label>-->
+   	</div>
+   	<div class="col-md-1">
+   		<a href="#" class="glyphicon glyphicon-search" style="color: #21618c; font-size: 27px" data-toggle="modal" data-target="#modalBuscarTurnos"></a>   		
+   	</div>  	
+</div>
+
+
+<div class="row">	
+
+    <div class="col-xs-12 col-md-3">
+    	
+        <div id="datetimepicker1"></div>  
+
+    </div>	    
+    <div class="col-xs-12 col-md-9">			
+		<table class="table table-hover">
+			<thead>
+		      <tr>				          	
+	          	<th class="#80cbc4 teal-text">INICIO</th>
+	          	<th class="#80cbc4 teal-text">FIN</th>
+	          	<th class="#80cbc4 teal-text">PACIENTE</th>
+	          	<th class="#80cbc4 teal-text"></th>
+	          	<th class="#80cbc4 teal-text">DURACION</th>
+	          	<th class="#80cbc4 teal-text">$</th>
+	          	<th class="#80cbc4 teal-text">ESTADO</th>
+	          	<th class="#80cbc4 teal-text">ACCION</th>
+		      </tr>
+		    </thead>
+		    
+		    	{{#if turnos.count}}
+		    		{{#each turnos}}
+		    			{{#if compare estado "OCUPADO"}}							    	
+					    	<tbody>					    						    	
+						      <tr class="info">					        							        
+						        <td>{{formatDate1 inicio}}</td>
+						        <td>{{formatDate1 fin}}</td>							        
+						        <td><a href="#" id="modalInfoPaciente">{{paciente.nombreApellido}}</a></td>
+						        <td><a href="#" id="modalInfoTratamientos"><button class="btn btn-info btn-xs">info</button></a></td>
+						        <td>{{duracion}} min</td>
+						        <td>$ {{importe}}</td>
+						        <td>{{estado}}</td>
+						        <td>
+									<div class="btn-group">
+									  <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Acción<span class="caret"></span>
+									  </button>
+									  <ul class="dropdown-menu">
+									    <li><a href="#" class="asistioTurno">Asistió</a></li>
+									    <li><a href="#" class="faltoTurno">Faltó</a></li>
+									    <li><a href="#" class="ocupadoTurno">Ocupado</a></li>
+									    <li><a href="#" class="confirmadoTurno">Confirmado</a></li>
+									    <li><a href="#" class="atendidoTurno">Atendido</a></li>
+									    <li role="separator" class="divider"></li>
+									    <li><a href="#" class="modalRemoveTurno">Eliminar</a></li>								    
+									  </ul>
+									</div>
+								</td>
+						        <!--<td><a href="#" class="modalRemoveTurno btn btn-danger btn-xs">Eliminar</a></td>-->
+						      </tr>
+						    </tbody>
+					    {{else}}
+					    	{{#if compare estado "ASISTIO"}}
+						    	<tbody>					    						    	
+							      <tr class="success">					        							        
+							        <td>{{formatDate1 inicio}}</td>
+							        <td>{{formatDate1 fin}}</td>							        
+							        <td><a href="#" id="modalInfoPaciente">{{paciente.nombreApellido}}</a></td>
+							        <td><a href="#" id="modalInfoTratamientos"><button class="btn btn-info btn-xs">info</button></a></td>
+							        <td>{{duracion}} min</td>
+							        <td>$ {{importe}}</td>
+							        <td>{{estado}}</td>
+							        <td>
+										<div class="btn-group">
+										  <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    Acción<span class="caret"></span>
+										  </button>
+										  <ul class="dropdown-menu">
+										    <li><a href="#" class="asistioTurno">Asistió</a></li>
+										    <li><a href="#" class="faltoTurno">Faltó</a></li>
+										    <li><a href="#" class="ocupadoTurno">Ocupado</a></li>
+										    <li><a href="#" class="confirmadoTurno">Confirmado</a></li>
+										    <li><a href="#" class="atendidoTurno">Atendido</a></li>
+										    <li role="separator" class="divider"></li>
+										    <li><a href="#" class="modalRemoveTurno">Eliminar</a></li>								    
+										  </ul>
+										</div>
+									</td>
+							        <!--<td><a href="#" class="modalRemoveTurno btn btn-danger btn-xs">Eliminar</a></td>-->
+							      </tr>
+							    </tbody>
+					    	{{else}}
+					    		{{#if compare estado "FALTO"}}
+							    	<tbody>					    						    	
+								      <tr class="danger">					        							        
+								        <td>{{formatDate1 inicio}}</td>
+								        <td>{{formatDate1 fin}}</td>							        
+								        <td><a href="#" id="modalInfoPaciente">{{paciente.nombreApellido}}</a></td>
+								        <td><a href="#" id="modalInfoTratamientos"><button class="btn btn-info btn-xs">info</button></a></td>
+								        <td>{{duracion}} min</td>
+								        <td>$ {{importe}}</td>
+								        <td>{{estado}}</td>
+								        <td>
+											<div class="btn-group">
+											  <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											    Acción<span class="caret"></span>
+											  </button>
+											  <ul class="dropdown-menu">
+											    <li><a href="#" class="asistioTurno">Asistió</a></li>
+											    <li><a href="#" class="faltoTurno">Faltó</a></li>
+											    <li><a href="#" class="ocupadoTurno">Ocupado</a></li>
+											    <li><a href="#" class="confirmadoTurno">Confirmado</a></li>
+											    <li><a href="#" class="atendidoTurno">Atendido</a></li>
+											    <li role="separator" class="divider"></li>
+											    <li><a href="#" class="modalRemoveTurno">Eliminar</a></li>								    
+											  </ul>
+											</div>
+										</td>
+								        <!--<td><a href="#" class="modalRemoveTurno btn btn-danger btn-xs">Eliminar</a></td>-->
+								      </tr>
+								    </tbody>
+					    		{{else}}
+					    			{{#if compare estado "CONFIRMADO"}}
+								    	<tbody>					    						    	
+									      <tr class="warning">					        							        
+									        <td>{{formatDate1 inicio}}</td>
+									        <td>{{formatDate1 fin}}</td>							        
+									        <td><a href="#" id="modalInfoPaciente">{{paciente.nombreApellido}}</a></td>
+									        <td><a href="#" id="modalInfoTratamientos"><button class="btn btn-info btn-xs">info</button></a></td>
+									        <td>{{duracion}} min</td>
+									        <td>$ {{importe}}</td>
+									        <td>{{estado}}</td>
+									        <td>
+												<div class="btn-group">
+												  <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												    Acción<span class="caret"></span>
+												  </button>
+												  <ul class="dropdown-menu">
+												    <li><a href="#" class="asistioTurno">Asistió</a></li>
+												    <li><a href="#" class="faltoTurno">Faltó</a></li>
+												    <li><a href="#" class="ocupadoTurno">Ocupado</a></li>
+												    <li><a href="#" class="confirmadoTurno">Confirmado</a></li>
+												    <li><a href="#" class="atendidoTurno">Atendido</a></li>
+												    <li role="separator" class="divider"></li>
+												    <li><a href="#" class="modalRemoveTurno">Eliminar</a></li>								    
+												  </ul>
+												</div>
+											</td>
+									        <!--<td><a href="#" class="modalRemoveTurno btn btn-danger btn-xs">Eliminar</a></td>-->
+									      </tr>
+									    </tbody>									    
+									{{else}}
+										{{#if compare estado "ATENDIDO"}}
+									    	<tbody>					    						    	
+										      <tr class="success">					        							        
+										        <td><s>{{formatDate1 inicio}}</s></td>
+										        <td><s>{{formatDate1 fin}}</s></td>							        
+										        <td><a href="#" id="modalInfoPaciente"><s>{{paciente.nombreApellido}}</s></a></td>
+										        <td><a href="#" id="modalInfoTratamientos"><button class="btn btn-info btn-xs">info</button></a></td>
+										        <td><s>{{duracion}} min</s></td>
+										        <td><s>$ {{importe}}</s></td>
+										        <td><s>{{estado}}</s></td>
+										        <td>
+													<div class="btn-group">
+													  <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													    Acción<span class="caret"></span>
+													  </button>
+													  <ul class="dropdown-menu">
+													    <li><a href="#" class="asistioTurno">Asistió</a></li>
+													    <li><a href="#" class="faltoTurno">Faltó</a></li>
+													    <li><a href="#" class="ocupadoTurno">Ocupado</a></li>
+													    <li><a href="#" class="confirmadoTurno">Confirmado</a></li>
+													    <li><a href="#" class="atendidoTurno">Atendido</a></li>
+													    <li role="separator" class="divider"></li>
+													    <li><a href="#" class="modalRemoveTurno">Eliminar</a></li>								    
+													  </ul>
+													</div>
+												</td>										        
+										      </tr>
+										    </tbody>
+										    {{else}}
+										    	{{#if compare estado "SOBRETURNO"}}
+											    	<tbody>					    						    	
+												      <tr class="info">					        							        
+												        <td><p class="text-danger"><strong>{{formatDate1 inicio}}</strong></p></td>
+												        <td><p class="text-danger"><strong>{{formatDate1 fin}}</strong></p></td>							        
+												        <td><a href="#" id="modalInfoPaciente" class="text-danger"><strong>{{paciente.nombreApellido}}</strong></a></td>
+												        <td><a href="#" id="modalInfoTratamientos" class="text-danger"><button class="btn btn-info btn-xs">info</button></a></td>
+												        <td><p class="text-danger"><strong>{{duracion}} min</strong></p></td>
+												        <td><p class="text-danger"><strong>$ {{importe}}</strong></p></td>
+												        <td><p class="text-danger"><strong>{{estado}}</strong></p></td>
+												        <td>
+															<div class="btn-group">
+															  <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															    Acción<span class="caret"></span>
+															  </button>
+															  <ul class="dropdown-menu">
+															  	<li><a href="#" class="atendidoSobreTurno">Atendido</a></li>
+															  	<li><a href="#" class="faltoSobreTurno">Faltó</a></li>
+															    <li role="separator" class="divider"></li>
+															    <li><a href="#" class="modalRemoveTurno">Eliminar</a></li>
+															  </ul>
+															</div>
+														</td>										        
+												      </tr>
+												    </tbody>
+										    	{{else}}
+										    		{{#if compare estado "SOBRETURNO ATENDIDO"}}
+												    	<tbody>					    						    	
+													      <tr class="info">					        							        
+													        <td><p class="text-danger"><s><strong>{{formatDate1 inicio}}</strong></s></p></td>
+													        <td><p class="text-danger"><s><strong>{{formatDate1 fin}}</strong></s></p></td>							        
+													        <td><a href="#" id="modalInfoPaciente" class="text-danger"><s><strong>{{paciente.nombreApellido}}</strong></s></a></td>
+													        <td><a href="#" id="modalInfoTratamientos" class="text-danger"><button class="btn btn-info btn-xs">info</button></a></td>
+													        <td><p class="text-danger"><s><strong>{{duracion}} min</strong></s></p></td>
+													        <td><p class="text-danger"><s><strong>$ {{importe}}</strong></s></p></td>
+													        <td><p class="text-danger"><s><strong>ATENDIDO</strong></s></p></td>
+													        <td>
+																<div class="btn-group">
+																  <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																    Acción<span class="caret"></span>
+																  </button>
+																  <ul class="dropdown-menu">
+																  	<li><a href="#" class="atendidoSobreTurno">Atendido</a></li>
+																  	<li><a href="#" class="faltoSobreTurno">Faltó</a></li>
+																    <li role="separator" class="divider"></li>
+																    <li><a href="#" class="modalRemoveTurno">Eliminar</a></li>
+																  </ul>
+																</div>
+															</td>										        
+													      </tr>
+													    </tbody>
+												    {{else}}
+												    {{#if compare estado "SOBRETURNO FALTO"}}
+												    	<tbody>					    						    	
+													      <tr class="info">					        							        
+													        <td><p class="text-danger"><strong>{{formatDate1 inicio}}</strong></p></td>
+													        <td><p class="text-danger"><strong>{{formatDate1 fin}}</strong></p></td>							        
+													        <td><a href="#" id="modalInfoPaciente" class="text-danger"><strong>{{paciente.nombreApellido}}</strong></a></td>
+													        <td><a href="#" id="modalInfoTratamientos" class="text-danger"><button class="btn btn-info btn-xs">info</button></a></td>
+													        <td><p class="text-danger"><strong>{{duracion}} min</strong></p></td>
+													        <td><p class="text-danger"><strong>$ {{importe}}</strong></p></td>
+													        <td><p class="text-danger"><strong>FALTO</strong></p></td>
+													        <td>
+																<div class="btn-group">
+																  <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																    Acción<span class="caret"></span>
+																  </button>
+																  <ul class="dropdown-menu">
+																  	<li><a href="#" class="atendidoSobreTurno">Atendido</a></li>
+																  	<li><a href="#" class="faltoSobreTurno">Faltó</a></li>
+																    <li role="separator" class="divider"></li>
+																    <li><a href="#" class="modalRemoveTurno">Eliminar</a></li>
+																  </ul>
+																</div>
+															</td>										        
+													      </tr>													    
+													    </tbody>
+													    {{else}}
+
+														    {{#if compare estado "CERRADO"}}
+													    	<tbody>					    						    	
+														      <tr class="danger">					        							        
+														        <td><p class="text-danger"><strong>{{formatDate1 inicio}}</strong></p></td>
+														        <td><p class="text-danger"><strong>{{formatDate1 fin}}</strong></p></td>							        
+														        <td></td>
+														        <td></td>
+														        <td></td>
+														        <td></td>
+														        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+														        <td>
+																	
+																</td>										        
+														      </tr>													    
+														    </tbody>
+														    {{else}}
+														    	{{#if compare estado "AUSENTE"}}
+														    	<tbody>					    						    	
+															      <tr class="danger">					        							        
+															        <td><p class="text-danger"><strong>{{formatDate1 inicio}}</strong></p></td>
+															        <td><p class="text-danger"><strong>{{formatDate1 fin}}</strong></p></td>							        
+															        <td></td>
+															        <td></td>
+															        <td></td>
+															        <td></td>
+															        <td><p class="text-danger"><strong>AUSENTE	</strong></p></td>
+															        <td>
+																		
+																	</td>										        
+															      </tr>													    
+															    </tbody>
+															    {{else}}
+															    	<tbody>
+															      		<tr>						    								    		
+																	        <td>{{formatDate1 inicio}}</td>
+																	        <td>{{formatDate1 fin}}</td>
+																	        <td></td>
+																	        <td></td>	
+																	        <td>{{duracion}} min</td>
+																	        <td></td>
+																	        <td>{{estado}}</td>							        							        
+																	        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>
+																    	</tr>
+																    </tbody>
+																{{/if}}
+															{{/if}}
+														{{/if}}
+													{{/if}}
+												{{/if}}
+											{{/if}}
+									{{/if}}
+					    		{{/if}}
+					    	{{/if}}
+					    {{/if}}
+		      		{{/each}}
+		      	{{else}}
+		      		{{#if compare diaSemana 'lunes'}}
+		      			<tbody>
+			      			{{#if consultorio.lunes.atiendeManana}}
+			      				{{#if horarioCorrido}}
+			      					<tr class="active">						    								    		
+								        <td><p>{{formatDate1 consultorio.lunes.mananaInicio}}</p></td>
+										<td><p>{{formatDate1 profesional1.lunes.tardeFin}}</p></td>
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td>LIBRE</td>				        
+								        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+							    	</tr>
+			      				{{else}}
+
+				      				{{#if profesional1.lunes.atiendeManana}}
+								      				{{#if diferenteFecha consultorio.lunes.mananaInicio profesional1.lunes.mananaInicio}}
+								      					<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.mananaInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.lunes.mananaInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>								      				
+											    	{{/if}}
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 profesional1.lunes.mananaInicio}}</td>
+									        <td>{{formatDate1 profesional1.lunes.mananaFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+								    	</tr>
+											    	{{#if diferenteFecha profesional1.lunes.mananaFin consultorio.lunes.mananaFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.lunes.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.mananaFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>							    	
+												    {{/if}}
+								   	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+									   	{{#if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									   		<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.mananaInicio}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.mananaFin}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+										        <td></td>				        
+									    	</tr>								   		
+									   	{{else}}
+								      		<tr class="active">						    								    		
+										        <td>{{formatDate1 consultorio.lunes.mananaInicio}}</td>
+										        <td>{{formatDate1 consultorio.lunes.mananaFin}}</td>
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td>LIBRE</td>				        
+										        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+									    	</tr>
+									    {{/if}}
+								    {{/if}}
+							    	{{#if consultorio.lunes.atiendeTarde}}
+								    	{{#if profesional1.lunes.atiendeTarde}}
+								    					{{#if diferenteFecha consultorio.lunes.mananaFin consultorio.lunes.tardeInicio}}
+											    		<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    	{{/if}}
+												    	{{#if diferenteFecha consultorio.lunes.tardeInicio profesional1.lunes.tardeInicio}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.tardeInicio}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.lunes.tardeInicio}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+												    	<tr class="active">						    								    		
+													        <td>{{formatDate1 profesional1.lunes.tardeInicio}}</td>
+													        <td>{{formatDate1 profesional1.lunes.tardeFin}}</td>
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td>LIBRE</td>				        
+													        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+												    	</tr>
+												    	{{#if diferenteFecha profesional1.lunes.tardeFin consultorio.lunes.tardeFin}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.lunes.tardeFin}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.tardeFin}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+								    	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+
+									    	<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.mananaFin}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.tardeInicio}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+										        <td></td>				        
+									    	</tr>
+									    	{{#	if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									    		<tr class="danger">
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.tardeInicio}}</strong></p></td>
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.tardeFin}}</strong></p></td>		        
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+											        <td></td>				        
+										    	</tr>
+									    	{{else}}
+									    		<tr class="active">							    								    		
+											        <td>{{formatDate1 consultorio.lunes.tardeInicio}}</td>
+											        <td>{{formatDate1 consultorio.lunes.tardeFin}}</td>
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td>LIBRE</td>				        
+											        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+										    	</tr>
+									    	{{/if}}
+									    	
+								    	{{/if}}
+								    {{else}} <!-- ATIENDE DE MAÑANA PERO NO DE TARDE-->
+								    	<tr class="danger">
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.mananaFin}}</strong></p></td>
+								    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    {{/if}}
+								{{/if}}
+						    {{else}} <!--NO ATIENDE DE MAÑANA -->
+						    	{{#if consultorio.lunes.atiendeTarde}}
+						    		{{#if profesional1.lunes.atiendeTarde}}
+						    						<tr class="danger">
+											    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+											    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.tardeInicio}}</strong></p></td>		        
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+												        <td></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha consultorio.lunes.tardeInicio profesional1.lunes.tardeInicio}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.tardeInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.lunes.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+											    	<tr class="active">						    								    		
+												        <td>{{formatDate1 profesional1.lunes.tardeInicio}}</td>
+												        <td>{{formatDate1 profesional1.lunes.tardeFin}}</td>
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td>LIBRE</td>				        
+												        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha profesional1.lunes.tardeFin consultorio.lunes.tardeFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.lunes.tardeFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.tardeFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+
+						    		{{else}}<!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+						    			<tr class="danger">
+								    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.lunes.tardeInicio}}</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 consultorio.lunes.tardeInicio}}</td>
+									        <td>{{formatDate1 consultorio.lunes.tardeFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>	
+								    	</tr>
+						    		{{/if}}
+						    		
+							    {{else}} <!--NO ATIENDE NI DE MAÑANA NI DE TARDE -->
+							    	<tr class="danger">
+							    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+							    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+								        <td></td>				        
+							    	</tr>
+							    {{/if}}
+							{{/if}}
+				    	
+				    	
+				    	</tbody>
+			    	{{/if}}
+			    	{{#if compare diaSemana 'martes'}}
+		      			<tbody>
+			      			{{#if consultorio.martes.atiendeManana}}
+			      				{{#if horarioCorrido}}
+			      					<tr class="active">						    								    		
+								        <td><p>{{formatDate1 consultorio.martes.mananaInicio}}</p></td>
+										<td><p>{{formatDate1 profesional1.martes.tardeFin}}</p></td>
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td>LIBRE</td>				        
+								        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+							    	</tr>
+			      				{{else}}
+
+				      				{{#if profesional1.martes.atiendeManana}}
+								      				{{#if diferenteFecha consultorio.martes.mananaInicio profesional1.martes.mananaInicio}}
+								      					<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.mananaInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.martes.mananaInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>								      				
+											    	{{/if}}
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 profesional1.martes.mananaInicio}}</td>
+									        <td>{{formatDate1 profesional1.martes.mananaFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+								    	</tr>
+											    	{{#if diferenteFecha profesional1.martes.mananaFin consultorio.martes.mananaFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.martes.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.mananaFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>							    	
+												    {{/if}}
+								   	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+									   	{{#if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									   		<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.mananaInicio}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.mananaFin}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+										        <td></td>				        
+									    	</tr>								   		
+									   	{{else}}
+								      		<tr class="active">						    								    		
+										        <td>{{formatDate1 consultorio.martes.mananaInicio}}</td>
+										        <td>{{formatDate1 consultorio.martes.mananaFin}}</td>
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td>LIBRE</td>				        
+										        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+									    	</tr>
+									    {{/if}}
+								    {{/if}}
+							    	{{#if consultorio.martes.atiendeTarde}}
+								    	{{#if profesional1.martes.atiendeTarde}}
+								    					{{#if diferenteFecha consultorio.martes.mananaFin consultorio.martes.tardeInicio}}
+											    		<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    	{{/if}}
+												    	{{#if diferenteFecha consultorio.martes.tardeInicio profesional1.martes.tardeInicio}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.tardeInicio}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.martes.tardeInicio}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+												    	<tr class="active">						    								    		
+													        <td>{{formatDate1 profesional1.martes.tardeInicio}}</td>
+													        <td>{{formatDate1 profesional1.martes.tardeFin}}</td>
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td>LIBRE</td>				        
+													        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+												    	</tr>
+												    	{{#if diferenteFecha profesional1.martes.tardeFin consultorio.martes.tardeFin}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.martes.tardeFin}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.tardeFin}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+								    	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+
+									    	<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.mananaFin}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.tardeInicio}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+										        <td></td>				        
+									    	</tr>
+									    	{{#	if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									    		<tr class="danger">
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.tardeInicio}}</strong></p></td>
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.tardeFin}}</strong></p></td>		        
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+											        <td></td>				        
+										    	</tr>
+									    	{{else}}
+									    		<tr class="active">							    								    		
+											        <td>{{formatDate1 consultorio.martes.tardeInicio}}</td>
+											        <td>{{formatDate1 consultorio.martes.tardeFin}}</td>
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td>LIBRE</td>				        
+											        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+										    	</tr>
+									    	{{/if}}
+									    	
+								    	{{/if}}
+								    {{else}} <!-- ATIENDE DE MAÑANA PERO NO DE TARDE-->
+								    	<tr class="danger">
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.mananaFin}}</strong></p></td>
+								    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    {{/if}}
+								{{/if}}
+						    {{else}} <!--NO ATIENDE DE MAÑANA -->
+						    	{{#if consultorio.martes.atiendeTarde}}
+						    		{{#if profesional1.martes.atiendeTarde}}
+						    						<tr class="danger">
+											    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+											    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.tardeInicio}}</strong></p></td>		        
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+												        <td></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha consultorio.martes.tardeInicio profesional1.martes.tardeInicio}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.tardeInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.martes.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+											    	<tr class="active">						    								    		
+												        <td>{{formatDate1 profesional1.martes.tardeInicio}}</td>
+												        <td>{{formatDate1 profesional1.martes.tardeFin}}</td>
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td>LIBRE</td>				        
+												        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha profesional1.martes.tardeFin consultorio.martes.tardeFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.martes.tardeFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.tardeFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+
+						    		{{else}}<!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+						    			<tr class="danger">
+								    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.martes.tardeInicio}}</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 consultorio.martes.tardeInicio}}</td>
+									        <td>{{formatDate1 consultorio.martes.tardeFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>	
+								    	</tr>
+						    		{{/if}}
+						    		
+							    {{else}} <!--NO ATIENDE NI DE MAÑANA NI DE TARDE -->
+							    	<tr class="danger">
+							    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+							    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+								        <td></td>				        
+							    	</tr>
+							    {{/if}}
+							{{/if}}
+				    	
+				    	
+				    	</tbody>
+			    	{{/if}}
+			    	{{#if compare diaSemana 'miercoles'}}
+		      			<tbody>
+			      			{{#if consultorio.miercoles.atiendeManana}}
+			      				{{#if horarioCorrido}}
+			      					<tr class="active">						    								    		
+								        <td><p>{{formatDate1 consultorio.miercoles.mananaInicio}}</p></td>
+										<td><p>{{formatDate1 profesional1.miercoles.tardeFin}}</p></td>
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td>LIBRE</td>				        
+								        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+							    	</tr>
+			      				{{else}}
+
+				      				{{#if profesional1.miercoles.atiendeManana}}
+								      				{{#if diferenteFecha consultorio.miercoles.mananaInicio profesional1.miercoles.mananaInicio}}
+								      					<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.mananaInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.miercoles.mananaInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>								      				
+											    	{{/if}}
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 profesional1.miercoles.mananaInicio}}</td>
+									        <td>{{formatDate1 profesional1.miercoles.mananaFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+								    	</tr>
+											    	{{#if diferenteFecha profesional1.miercoles.mananaFin consultorio.miercoles.mananaFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.miercoles.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.mananaFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>							    	
+												    {{/if}}
+								   	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+									   	{{#if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									   		<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.mananaInicio}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.mananaFin}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+										        <td></td>				        
+									    	</tr>								   		
+									   	{{else}}
+								      		<tr class="active">						    								    		
+										        <td>{{formatDate1 consultorio.miercoles.mananaInicio}}</td>
+										        <td>{{formatDate1 consultorio.miercoles.mananaFin}}</td>
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td>LIBRE</td>				        
+										        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+									    	</tr>
+									    {{/if}}
+								    {{/if}}
+							    	{{#if consultorio.miercoles.atiendeTarde}}
+								    	{{#if profesional1.miercoles.atiendeTarde}}
+								    					{{#if diferenteFecha consultorio.miercoles.mananaFin consultorio.miercoles.tardeInicio}}
+											    		<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    	{{/if}}
+												    	{{#if diferenteFecha consultorio.miercoles.tardeInicio profesional1.miercoles.tardeInicio}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.tardeInicio}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.miercoles.tardeInicio}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+												    	<tr class="active">						    								    		
+													        <td>{{formatDate1 profesional1.miercoles.tardeInicio}}</td>
+													        <td>{{formatDate1 profesional1.miercoles.tardeFin}}</td>
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td>LIBRE</td>				        
+													        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+												    	</tr>
+												    	{{#if diferenteFecha profesional1.miercoles.tardeFin consultorio.miercoles.tardeFin}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.miercoles.tardeFin}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.tardeFin}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+								    	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+
+									    	<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.mananaFin}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.tardeInicio}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+										        <td></td>				        
+									    	</tr>
+									    	{{#	if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									    		<tr class="danger">
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.tardeInicio}}</strong></p></td>
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.tardeFin}}</strong></p></td>		        
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+											        <td></td>				        
+										    	</tr>
+									    	{{else}}
+									    		<tr class="active">							    								    		
+											        <td>{{formatDate1 consultorio.miercoles.tardeInicio}}</td>
+											        <td>{{formatDate1 consultorio.miercoles.tardeFin}}</td>
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td>LIBRE</td>				        
+											        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+										    	</tr>
+									    	{{/if}}
+									    	
+								    	{{/if}}
+								    {{else}} <!-- ATIENDE DE MAÑANA PERO NO DE TARDE-->
+								    	<tr class="danger">
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.mananaFin}}</strong></p></td>
+								    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    {{/if}}
+								{{/if}}
+						    {{else}} <!--NO ATIENDE DE MAÑANA -->
+						    	{{#if consultorio.miercoles.atiendeTarde}}
+						    		{{#if profesional1.miercoles.atiendeTarde}}
+						    						<tr class="danger">
+											    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+											    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.tardeInicio}}</strong></p></td>		        
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+												        <td></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha consultorio.miercoles.tardeInicio profesional1.miercoles.tardeInicio}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.tardeInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.miercoles.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+											    	<tr class="active">						    								    		
+												        <td>{{formatDate1 profesional1.miercoles.tardeInicio}}</td>
+												        <td>{{formatDate1 profesional1.miercoles.tardeFin}}</td>
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td>LIBRE</td>				        
+												        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha profesional1.miercoles.tardeFin consultorio.miercoles.tardeFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.miercoles.tardeFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.tardeFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+
+						    		{{else}}<!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+						    			<tr class="danger">
+								    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.miercoles.tardeInicio}}</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 consultorio.miercoles.tardeInicio}}</td>
+									        <td>{{formatDate1 consultorio.miercoles.tardeFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>	
+								    	</tr>
+						    		{{/if}}
+						    		
+							    {{else}} <!--NO ATIENDE NI DE MAÑANA NI DE TARDE -->
+							    	<tr class="danger">
+							    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+							    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+								        <td></td>				        
+							    	</tr>
+							    {{/if}}
+							{{/if}}
+				    	
+				    	
+				    	</tbody>
+			    	{{/if}}
+			    	{{#if compare diaSemana 'jueves'}}
+		      			<tbody>
+			      			{{#if consultorio.jueves.atiendeManana}}
+			      				{{#if horarioCorrido}}
+			      					<tr class="active">						    								    		
+								        <td><p>{{formatDate1 consultorio.jueves.mananaInicio}}</p></td>
+										<td><p>{{formatDate1 profesional1.jueves.tardeFin}}</p></td>
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td>LIBRE</td>				        
+								        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+							    	</tr>
+			      				{{else}}
+
+				      				{{#if profesional1.jueves.atiendeManana}}
+								      				{{#if diferenteFecha consultorio.jueves.mananaInicio profesional1.jueves.mananaInicio}}
+								      					<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.mananaInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.jueves.mananaInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>								      				
+											    	{{/if}}
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 profesional1.jueves.mananaInicio}}</td>
+									        <td>{{formatDate1 profesional1.jueves.mananaFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+								    	</tr>
+											    	{{#if diferenteFecha profesional1.jueves.mananaFin consultorio.jueves.mananaFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.jueves.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.mananaFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>							    	
+												    {{/if}}
+								   	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+									   	{{#if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									   		<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.mananaInicio}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.mananaFin}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+										        <td></td>				        
+									    	</tr>								   		
+									   	{{else}}
+								      		<tr class="active">						    								    		
+										        <td>{{formatDate1 consultorio.jueves.mananaInicio}}</td>
+										        <td>{{formatDate1 consultorio.jueves.mananaFin}}</td>
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td>LIBRE</td>				        
+										        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+									    	</tr>
+									    {{/if}}
+								    {{/if}}
+							    	{{#if consultorio.jueves.atiendeTarde}}
+								    	{{#if profesional1.jueves.atiendeTarde}}
+								    					{{#if diferenteFecha consultorio.jueves.mananaFin consultorio.jueves.tardeInicio}}
+											    		<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    	{{/if}}
+												    	{{#if diferenteFecha consultorio.jueves.tardeInicio profesional1.jueves.tardeInicio}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.tardeInicio}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.jueves.tardeInicio}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+												    	<tr class="active">						    								    		
+													        <td>{{formatDate1 profesional1.jueves.tardeInicio}}</td>
+													        <td>{{formatDate1 profesional1.jueves.tardeFin}}</td>
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td>LIBRE</td>				        
+													        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+												    	</tr>
+												    	{{#if diferenteFecha profesional1.jueves.tardeFin consultorio.jueves.tardeFin}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.jueves.tardeFin}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.tardeFin}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+								    	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+
+									    	<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.mananaFin}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.tardeInicio}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+										        <td></td>				        
+									    	</tr>
+									    	{{#	if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									    		<tr class="danger">
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.tardeInicio}}</strong></p></td>
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.tardeFin}}</strong></p></td>		        
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+											        <td></td>				        
+										    	</tr>
+									    	{{else}}
+									    		<tr class="active">							    								    		
+											        <td>{{formatDate1 consultorio.jueves.tardeInicio}}</td>
+											        <td>{{formatDate1 consultorio.jueves.tardeFin}}</td>
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td>LIBRE</td>				        
+											        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+										    	</tr>
+									    	{{/if}}
+									    	
+								    	{{/if}}
+								    {{else}} <!-- ATIENDE DE MAÑANA PERO NO DE TARDE-->
+								    	<tr class="danger">
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.mananaFin}}</strong></p></td>
+								    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    {{/if}}
+								{{/if}}
+						    {{else}} <!--NO ATIENDE DE MAÑANA -->
+						    	{{#if consultorio.jueves.atiendeTarde}}
+						    		{{#if profesional1.jueves.atiendeTarde}}
+						    						<tr class="danger">
+											    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+											    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.tardeInicio}}</strong></p></td>		        
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+												        <td></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha consultorio.jueves.tardeInicio profesional1.jueves.tardeInicio}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.tardeInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.jueves.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+											    	<tr class="active">						    								    		
+												        <td>{{formatDate1 profesional1.jueves.tardeInicio}}</td>
+												        <td>{{formatDate1 profesional1.jueves.tardeFin}}</td>
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td>LIBRE</td>				        
+												        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha profesional1.jueves.tardeFin consultorio.jueves.tardeFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.jueves.tardeFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.tardeFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+
+						    		{{else}}<!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+						    			<tr class="danger">
+								    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.jueves.tardeInicio}}</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 consultorio.jueves.tardeInicio}}</td>
+									        <td>{{formatDate1 consultorio.jueves.tardeFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>	
+								    	</tr>
+						    		{{/if}}
+						    		
+							    {{else}} <!--NO ATIENDE NI DE MAÑANA NI DE TARDE -->
+							    	<tr class="danger">
+							    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+							    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+								        <td></td>				        
+							    	</tr>
+							    {{/if}}
+							{{/if}}
+				    	
+				    	
+				    	</tbody>
+			    	{{/if}}
+			    	{{#if compare diaSemana 'viernes'}}
+		      			<tbody>
+			      			{{#if consultorio.viernes.atiendeManana}}
+			      				{{#if horarioCorrido}}
+			      					<tr class="active">						    								    		
+								        <td><p>{{formatDate1 consultorio.viernes.mananaInicio}}</p></td>
+										<td><p>{{formatDate1 profesional1.viernes.tardeFin}}</p></td>
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td>LIBRE</td>				        
+								        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+							    	</tr>
+			      				{{else}}
+
+				      				{{#if profesional1.viernes.atiendeManana}}
+								      				{{#if diferenteFecha consultorio.viernes.mananaInicio profesional1.viernes.mananaInicio}}
+								      					<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.mananaInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.viernes.mananaInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>								      				
+											    	{{/if}}
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 profesional1.viernes.mananaInicio}}</td>
+									        <td>{{formatDate1 profesional1.viernes.mananaFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+								    	</tr>
+											    	{{#if diferenteFecha profesional1.viernes.mananaFin consultorio.viernes.mananaFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.viernes.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.mananaFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>							    	
+												    {{/if}}
+								   	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+									   	{{#if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									   		<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.mananaInicio}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.mananaFin}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+										        <td></td>				        
+									    	</tr>								   		
+									   	{{else}}
+								      		<tr class="active">						    								    		
+										        <td>{{formatDate1 consultorio.viernes.mananaInicio}}</td>
+										        <td>{{formatDate1 consultorio.viernes.mananaFin}}</td>
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td>LIBRE</td>				        
+										        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+									    	</tr>
+									    {{/if}}
+								    {{/if}}
+							    	{{#if consultorio.viernes.atiendeTarde}}
+								    	{{#if profesional1.viernes.atiendeTarde}}
+								    					{{#if diferenteFecha consultorio.viernes.mananaFin consultorio.viernes.tardeInicio}}
+											    		<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    	{{/if}}
+												    	{{#if diferenteFecha consultorio.viernes.tardeInicio profesional1.viernes.tardeInicio}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.tardeInicio}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.viernes.tardeInicio}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+												    	<tr class="active">						    								    		
+													        <td>{{formatDate1 profesional1.viernes.tardeInicio}}</td>
+													        <td>{{formatDate1 profesional1.viernes.tardeFin}}</td>
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td>LIBRE</td>				        
+													        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+												    	</tr>
+												    	{{#if diferenteFecha profesional1.viernes.tardeFin consultorio.viernes.tardeFin}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.viernes.tardeFin}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.tardeFin}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+								    	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+
+									    	<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.mananaFin}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.tardeInicio}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+										        <td></td>				        
+									    	</tr>
+									    	{{#	if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									    		<tr class="danger">
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.tardeInicio}}</strong></p></td>
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.tardeFin}}</strong></p></td>		        
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+											        <td></td>				        
+										    	</tr>
+									    	{{else}}
+									    		<tr class="active">							    								    		
+											        <td>{{formatDate1 consultorio.viernes.tardeInicio}}</td>
+											        <td>{{formatDate1 consultorio.viernes.tardeFin}}</td>
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td>LIBRE</td>				        
+											        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+										    	</tr>
+									    	{{/if}}
+									    	
+								    	{{/if}}
+								    {{else}} <!-- ATIENDE DE MAÑANA PERO NO DE TARDE-->
+								    	<tr class="danger">
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.mananaFin}}</strong></p></td>
+								    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    {{/if}}
+								{{/if}}
+						    {{else}} <!--NO ATIENDE DE MAÑANA -->
+						    	{{#if consultorio.viernes.atiendeTarde}}
+						    		{{#if profesional1.viernes.atiendeTarde}}
+						    						<tr class="danger">
+											    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+											    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.tardeInicio}}</strong></p></td>		        
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+												        <td></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha consultorio.viernes.tardeInicio profesional1.viernes.tardeInicio}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.tardeInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.viernes.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+											    	<tr class="active">						    								    		
+												        <td>{{formatDate1 profesional1.viernes.tardeInicio}}</td>
+												        <td>{{formatDate1 profesional1.viernes.tardeFin}}</td>
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td>LIBRE</td>				        
+												        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha profesional1.viernes.tardeFin consultorio.viernes.tardeFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.viernes.tardeFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.tardeFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+
+						    		{{else}}<!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+						    			<tr class="danger">
+								    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.viernes.tardeInicio}}</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 consultorio.viernes.tardeInicio}}</td>
+									        <td>{{formatDate1 consultorio.viernes.tardeFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>	
+								    	</tr>
+						    		{{/if}}
+						    		
+							    {{else}} <!--NO ATIENDE NI DE MAÑANA NI DE TARDE -->
+							    	<tr class="danger">
+							    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+							    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+								        <td></td>				        
+							    	</tr>
+							    {{/if}}
+							{{/if}}
+				    	
+				    	
+				    	</tbody>
+			    	{{/if}}
+			    	{{#if compare diaSemana 'sabado'}}
+		      			<tbody>
+			      			{{#if consultorio.sabado.atiendeManana}}
+			      				{{#if horarioCorrido}}
+			      					<tr class="active">						    								    		
+								        <td><p>{{formatDate1 consultorio.sabado.mananaInicio}}</p></td>
+										<td><p>{{formatDate1 profesional1.sabado.tardeFin}}</p></td>
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td>LIBRE</td>				        
+								        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+							    	</tr>
+			      				{{else}}
+
+				      				{{#if profesional1.sabado.atiendeManana}}
+								      				{{#if diferenteFecha consultorio.sabado.mananaInicio profesional1.sabado.mananaInicio}}
+								      					<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.mananaInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.sabado.mananaInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>								      				
+											    	{{/if}}
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 profesional1.sabado.mananaInicio}}</td>
+									        <td>{{formatDate1 profesional1.sabado.mananaFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+								    	</tr>
+											    	{{#if diferenteFecha profesional1.sabado.mananaFin consultorio.sabado.mananaFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.sabado.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.mananaFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>							    	
+												    {{/if}}
+								   	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+									   	{{#if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									   		<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.mananaInicio}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.mananaFin}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+										        <td></td>				        
+									    	</tr>								   		
+									   	{{else}}
+								      		<tr class="active">						    								    		
+										        <td>{{formatDate1 consultorio.sabado.mananaInicio}}</td>
+										        <td>{{formatDate1 consultorio.sabado.mananaFin}}</td>
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td>LIBRE</td>				        
+										        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+									    	</tr>
+									    {{/if}}
+								    {{/if}}
+							    	{{#if consultorio.sabado.atiendeTarde}}
+								    	{{#if profesional1.sabado.atiendeTarde}}
+								    					{{#if diferenteFecha consultorio.sabado.mananaFin consultorio.sabado.tardeInicio}}
+											    		<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    	{{/if}}
+												    	{{#if diferenteFecha consultorio.sabado.tardeInicio profesional1.sabado.tardeInicio}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.tardeInicio}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.sabado.tardeInicio}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+												    	<tr class="active">						    								    		
+													        <td>{{formatDate1 profesional1.sabado.tardeInicio}}</td>
+													        <td>{{formatDate1 profesional1.sabado.tardeFin}}</td>
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td>LIBRE</td>				        
+													        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+												    	</tr>
+												    	{{#if diferenteFecha profesional1.sabado.tardeFin consultorio.sabado.tardeFin}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.sabado.tardeFin}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.tardeFin}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+								    	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+
+									    	<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.mananaFin}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.tardeInicio}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+										        <td></td>				        
+									    	</tr>
+									    	{{#	if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									    		<tr class="danger">
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.tardeInicio}}</strong></p></td>
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.tardeFin}}</strong></p></td>		        
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+											        <td></td>				        
+										    	</tr>
+									    	{{else}}
+									    		<tr class="active">							    								    		
+											        <td>{{formatDate1 consultorio.sabado.tardeInicio}}</td>
+											        <td>{{formatDate1 consultorio.sabado.tardeFin}}</td>
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td>LIBRE</td>				        
+											        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+										    	</tr>
+									    	{{/if}}
+									    	
+								    	{{/if}}
+								    {{else}} <!-- ATIENDE DE MAÑANA PERO NO DE TARDE-->
+								    	<tr class="danger">
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.mananaFin}}</strong></p></td>
+								    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    {{/if}}
+								{{/if}}
+						    {{else}} <!--NO ATIENDE DE MAÑANA -->
+						    	{{#if consultorio.sabado.atiendeTarde}}
+						    		{{#if profesional1.sabado.atiendeTarde}}
+						    						<tr class="danger">
+											    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+											    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.tardeInicio}}</strong></p></td>		        
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+												        <td></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha consultorio.sabado.tardeInicio profesional1.sabado.tardeInicio}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.tardeInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.sabado.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+											    	<tr class="active">						    								    		
+												        <td>{{formatDate1 profesional1.sabado.tardeInicio}}</td>
+												        <td>{{formatDate1 profesional1.sabado.tardeFin}}</td>
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td>LIBRE</td>				        
+												        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha profesional1.sabado.tardeFin consultorio.sabado.tardeFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.sabado.tardeFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.tardeFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+
+						    		{{else}}<!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+						    			<tr class="danger">
+								    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.sabado.tardeInicio}}</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 consultorio.sabado.tardeInicio}}</td>
+									        <td>{{formatDate1 consultorio.sabado.tardeFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>	
+								    	</tr>
+						    		{{/if}}
+						    		
+							    {{else}} <!--NO ATIENDE NI DE MAÑANA NI DE TARDE -->
+							    	<tr class="danger">
+							    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+							    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+								        <td></td>				        
+							    	</tr>
+							    {{/if}}
+							{{/if}}
+				    	
+				    	
+				    	</tbody>
+			    	{{/if}}
+			    	{{#if compare diaSemana 'domingo'}}
+		      			<tbody>
+			      			{{#if consultorio.domingo.atiendeManana}}
+			      				{{#if horarioCorrido}}
+			      					<tr class="active">						    								    		
+								        <td><p>{{formatDate1 consultorio.domingo.mananaInicio}}</p></td>
+										<td><p>{{formatDate1 profesional1.domingo.tardeFin}}</p></td>
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td>LIBRE</td>				        
+								        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+							    	</tr>
+			      				{{else}}
+
+				      				{{#if profesional1.domingo.atiendeManana}}
+								      				{{#if diferenteFecha consultorio.domingo.mananaInicio profesional1.domingo.mananaInicio}}
+								      					<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.mananaInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.domingo.mananaInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>								      				
+											    	{{/if}}
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 profesional1.domingo.mananaInicio}}</td>
+									        <td>{{formatDate1 profesional1.domingo.mananaFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+								    	</tr>
+											    	{{#if diferenteFecha profesional1.domingo.mananaFin consultorio.domingo.mananaFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.domingo.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.mananaFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>							    	
+												    {{/if}}
+								   	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+									   	{{#if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									   		<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.mananaInicio}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.mananaFin}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+										        <td></td>				        
+									    	</tr>								   		
+									   	{{else}}
+								      		<tr class="active">						    								    		
+										        <td>{{formatDate1 consultorio.domingo.mananaInicio}}</td>
+										        <td>{{formatDate1 consultorio.domingo.mananaFin}}</td>
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td>LIBRE</td>				        
+										        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+									    	</tr>
+									    {{/if}}
+								    {{/if}}
+							    	{{#if consultorio.domingo.atiendeTarde}}
+								    	{{#if profesional1.domingo.atiendeTarde}}
+								    					{{#if diferenteFecha consultorio.domingo.mananaFin consultorio.domingo.tardeInicio}}
+											    		<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.mananaFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    	{{/if}}
+												    	{{#if diferenteFecha consultorio.domingo.tardeInicio profesional1.domingo.tardeInicio}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.tardeInicio}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.domingo.tardeInicio}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+												    	<tr class="active">						    								    		
+													        <td>{{formatDate1 profesional1.domingo.tardeInicio}}</td>
+													        <td>{{formatDate1 profesional1.domingo.tardeFin}}</td>
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td>LIBRE</td>				        
+													        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+												    	</tr>
+												    	{{#if diferenteFecha profesional1.domingo.tardeFin consultorio.domingo.tardeFin}}
+													    	<tr class="danger">
+													    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.domingo.tardeFin}}</strong></p></td>
+													    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.tardeFin}}</strong></p></td>		        
+														        <td></td>
+														        <td></td>
+														        <td></td>	
+														        <td></td>
+														        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+														        <td></td>				        
+													    	</tr>
+													    {{/if}}
+								    	{{else}} <!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+
+									    	<tr class="danger">
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.mananaFin}}</strong></p></td>
+									    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.tardeInicio}}</strong></p></td>		        
+										        <td></td>
+										        <td></td>
+										        <td></td>	
+										        <td></td>
+										        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+										        <td></td>				        
+									    	</tr>
+									    	{{#	if eligioProfesional}} <!-- SI SELECCIONO UN PROFESINAL TIENE QUE MOSTRAR AUSENTE-->
+									    		<tr class="danger">
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.tardeInicio}}</strong></p></td>
+										    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.tardeFin}}</strong></p></td>		        
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+											        <td></td>				        
+										    	</tr>
+									    	{{else}}
+									    		<tr class="active">							    								    		
+											        <td>{{formatDate1 consultorio.domingo.tardeInicio}}</td>
+											        <td>{{formatDate1 consultorio.domingo.tardeFin}}</td>
+											        <td></td>
+											        <td></td>
+											        <td></td>	
+											        <td></td>
+											        <td>LIBRE</td>				        
+											        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+										    	</tr>
+									    	{{/if}}
+									    	
+								    	{{/if}}
+								    {{else}} <!-- ATIENDE DE MAÑANA PERO NO DE TARDE-->
+								    	<tr class="danger">
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.mananaFin}}</strong></p></td>
+								    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    {{/if}}
+								{{/if}}
+						    {{else}} <!--NO ATIENDE DE MAÑANA -->
+						    	{{#if consultorio.domingo.atiendeTarde}}
+						    		{{#if profesional1.domingo.atiendeTarde}}
+						    						<tr class="danger">
+											    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+											    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.tardeInicio}}</strong></p></td>		        
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+												        <td></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha consultorio.domingo.tardeInicio profesional1.domingo.tardeInicio}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.tardeInicio}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.domingo.tardeInicio}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+											    	<tr class="active">						    								    		
+												        <td>{{formatDate1 profesional1.domingo.tardeInicio}}</td>
+												        <td>{{formatDate1 profesional1.domingo.tardeFin}}</td>
+												        <td></td>
+												        <td></td>
+												        <td></td>	
+												        <td></td>
+												        <td>LIBRE</td>				        
+												        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>				        
+											    	</tr>
+											    	{{#if diferenteFecha profesional1.domingo.tardeFin consultorio.domingo.tardeFin}}
+												    	<tr class="danger">
+												    		<td><p class="text-danger"><strong>{{formatDate1 profesional1.domingo.tardeFin}}</strong></p></td>
+												    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.tardeFin}}</strong></p></td>		        
+													        <td></td>
+													        <td></td>
+													        <td></td>	
+													        <td></td>
+													        <td><p class="text-danger"><strong>AUSENTE</strong></p></td>
+													        <td></td>				        
+												    	</tr>
+												    {{/if}}
+
+						    		{{else}}<!-- NO SELECCIONO UN PROFESIONAL Y SOLO TRAE DATOS DEL CONSULTORIO-->
+						    			<tr class="danger">
+								    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+								    		<td><p class="text-danger"><strong>{{formatDate1 consultorio.domingo.tardeInicio}}</strong></p></td>		        
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+									        <td></td>				        
+								    	</tr>
+								    	<tr class="active">						    								    		
+									        <td>{{formatDate1 consultorio.domingo.tardeInicio}}</td>
+									        <td>{{formatDate1 consultorio.domingo.tardeFin}}</td>
+									        <td></td>
+									        <td></td>
+									        <td></td>	
+									        <td></td>
+									        <td>LIBRE</td>				        
+									        <td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalIngresoTurno">Reservar</button></td>	
+								    	</tr>
+						    		{{/if}}
+						    		
+							    {{else}} <!--NO ATIENDE NI DE MAÑANA NI DE TARDE -->
+							    	<tr class="danger">
+							    		<td><p class="text-danger"><strong>8:00</strong></p></td>
+							    		<td><p class="text-danger"><strong>21:00</strong></p></td>		        
+								        <td></td>
+								        <td></td>
+								        <td></td>	
+								        <td></td>
+								        <td><p class="text-danger"><strong>CERRADO</strong></p></td>
+								        <td></td>				        
+							    	</tr>
+							    {{/if}}
+							{{/if}}
+				    	
+				    	
+				    	</tbody>
+			    	{{/if}}
+			   	{{/if}}
+		    	
+		</table>				
+	</div>		
+</div>
+</template>
+
+

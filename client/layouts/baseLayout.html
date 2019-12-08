@@ -1,0 +1,59 @@
+<template name="baseLayout">
+<body class="top-navigation">
+	<div id="wrapper">
+
+	<nav class="navbar navbar-default">
+	  	<div class="container"> 
+	  	<nav class="navbar navbar-expand-lg navbar-static-top" role="navigation">		  		
+	  			<ul class="nav navbar-nav mr-auto">
+						
+					<!--{{#if currentUser}}	-->
+					{{#if isInRole 'adminTotal'}}
+						<!--<li><a href="{{ pathFor 'turnos'}}">Turnos</a></li>	-->			
+						<li class="dropdown"><a href="{{ pathFor 'consultorios'}}">Consultorios</a></li>
+						<li class="dropdown"><a href="{{ pathFor 'permisos'}}">Permisos</a></li>
+						<li class="dropdown"><a href="{{ pathFor 'profesionales'}}">Profesionales</a></li>
+						<li class="dropdown"><a href="{{ pathFor 'tratamientos'}}">Tratamientos</a></li>										
+						<li class="dropdown"><a href="{{ pathFor 'pacientes'}}">Pacientes</a></li>
+						<li class="dropdown"><a href="{{ pathFor 'obras'}}">Obras</a></li>
+						<li class="dropdown"><a href="{{ pathFor 'calendar'}}"><strong>Calendario</strong></a></li>
+					{{/if}}	
+					{{#if isInRole 'adminConsultorio'}}						
+						<li class="dropdown"><a href="{{ pathFor 'horarios'}}">Horarios</a></li>
+						<li class="dropdown"><a href="{{ pathFor 'profesionales'}}">Profesionales</a></li>
+						<li class="dropdown"><a href="{{ pathFor 'tratamientos'}}">Tratamientos</a></li>										
+						<li class="dropdown"><a href="{{ pathFor 'pacientes'}}">Pacientes</a></li>
+						<li class="dropdown"><a href="{{ pathFor 'obras'}}">Obras</a></li>
+						<li class="dropdown"><a href="{{ pathFor 'calendar'}}"><strong>Calendario</strong></a></li>
+					{{/if}}
+					{{#if isInRole 'turnos'}}																					
+						<li><a href="{{ pathFor 'pacientes'}}">Pacientes</a></li>						
+						<li><a href="{{ pathFor 'calendar'}}"><strong>Calendario</strong></a></li>
+					{{/if}}
+					{{#if isInRole 'profesional'}}																											
+						<li><a href="{{ pathFor 'calendar'}}"><strong>Calendario</strong></a></li>
+					{{/if}}					
+					{{#if isInRole 'internet'}}																											
+						<li><a href="{{ pathFor 'misdatos'}}"><strong>Mis Datos</strong></a></li>
+						<li><a href="{{ pathFor 'sacarturno'}}"><strong>Turno</strong></a></li>
+					{{/if}}					
+						
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+			      
+			      <li><a href="#">{{> loginButtons}}</a></li>
+			      <div class="navbar-header">
+				      <a href="{{ pathFor 'calendar'}}" class="navbar-brand">TURNOS</a>
+				  </div>			      
+			      
+			    </ul>
+		</nav>
+		</div>
+	</nav>
+	<div class="container">
+		{{> yield}}	
+	</div>
+
+</div>
+</body>
+</template>

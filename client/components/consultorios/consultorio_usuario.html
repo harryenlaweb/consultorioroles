@@ -1,0 +1,84 @@
+<template name="consultorioUsuario">
+		<div class="row">
+			<div class="col-lg-12"> 
+				<a class="btn btn-success btn-md" href="{{ pathFor 'consultorios'}}">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					Volver al listado de consultorios
+				</a>
+				<hr>
+			</div>
+		</div>
+		<div class="row">		
+
+			<div class="col-lg-6">
+
+			{{#with consultorio}}
+				<div class="panel panel-success">
+				  <div class="panel-heading"><strong><h3>{{nombre}}</h3></strong></div>
+				  <div class="panel-body">
+				    <p>Direccion: {{direccion}}</p>
+				  </div>
+				</div>
+
+				<div class="panel panel-info">
+				  <div class="panel-heading"><h4>Usuarios del consultorio</h4></div>
+				  <div class="panel-body">
+				    {{#if misusuarios}}
+						<table class="table table-hover">
+							
+						    <tbody>
+						    	{{#each misusuarios}}
+						      <tr>
+						        <td>{{email}}</td>
+						        <td>{{mispermisos}}</td>
+						        <td><!--<a href="#" class="removerUsuario"> <button class="btn btn-danger btn-xs">Eliminar</button></a>--></td>
+						      </tr>
+						      	{{/each}}
+						    </tbody>	
+						</table>					
+					{{else}}
+						<p>Este consultorio no tiene usuarios</p>
+					{{/if}}
+				  </div>
+				</div>				
+				{{/with}}
+			</div>
+			<div class="col-lg-6">
+				<div class="panel panel-info">
+				  <div class="panel-heading col-lg-12">
+				  	<div class="col-lg-6 col-sm-6"><h4>Agregar usuario</h4></div>
+				  	<div class="col-lg-6 col-sm-6">{{> EasySearch.Input index=usuarios attributes=searchAttributes }}</div>				  
+				  </div>				  
+				  <div class="panel-body">
+				    
+				   
+						<table class="table table-hover">							
+						    <tbody>
+						    	{{#EasySearch.Each index=usuarios}}	
+						      <tr>
+						        <td>{{email}}</td>
+						        <td><span class="right"><a href="#" class="agregarUsuario" >
+										<i class="btn btn-success btn-xs"> Agregar</i></a>				
+									</span>
+								</td>
+						      </tr>
+						      	{{/EasySearch.Each}}
+						    </tbody>	
+						</table>			
+						
+
+						{{#EasySearch.IfNoResults index=usuarios}}
+							<p>No hay resultados ...</p>
+						{{/EasySearch.IfNoResults}}
+
+						{{#EasySearch.IfSearching index=usuarios}}
+							<p>Buscando ...</p>
+						{{/EasySearch.IfSearching}}
+					
+					{{>EasySearch.Pagination index=usuarios}}
+				  </div>
+				</div>				
+		      		
+			</div>					
+		</div>
+</template>
