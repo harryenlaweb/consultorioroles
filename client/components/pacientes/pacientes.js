@@ -7,6 +7,7 @@ import { Router } from 'meteor/iron:router';
 import SimpleSchema from 'simpl-schema';
 import { check } from 'meteor/check';
 import { ReactiveVar } from 'meteor/reactive-var'
+import '../stylesheets/style.css';
 
 Template.pacientes.onCreated(function(){     
   this.selPacienteEliminar = new ReactiveVar(null);
